@@ -12,6 +12,10 @@ app.ws("/", (ws, req) => {
         if (msg.type === "join") {
             connectionHandler(ws, msg)
         }
+
+        if (msg.type === "draw") {
+            broadcastConnections(ws, msg)
+        }
     })
 })
 
@@ -27,7 +31,7 @@ const broadcastConnections = (ws, msg) => {
 
     clients.forEach((client) => {
         if (client.id === msg.id) {
-            client.send(`Пользователь ${msg.username} подключился`)
+            client.send(JSON.stringify(msg))
         }
     })
 }

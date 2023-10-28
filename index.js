@@ -9,7 +9,7 @@ app.ws("/", (ws, req) => {
     ws.on("message", (msg) => {
         msg = JSON.parse(msg)
 
-        if (msg.type === "connection") {
+        if (msg.type === "join") {
             connectionHandler(ws, msg)
         }
     })
@@ -27,7 +27,7 @@ const broadcastConnections = (ws, msg) => {
 
     clients.forEach((client) => {
         if (client.id === msg.id) {
-            client.send(`Пользователь ${msg.name} подключился`)
+            client.send(`Пользователь ${msg.username} подключился`)
         }
     })
 }
